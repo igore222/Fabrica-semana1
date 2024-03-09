@@ -1,0 +1,133 @@
+/* modelo-logico: */
+
+CREATE TABLE Cliente (
+    cliente_id INTEGER PRIMARY KEY,
+    nome VARCHAR(255),
+    cpf VARCHAR(14),
+    telefone VARCHAR(15),
+    email VARCHAR(255)
+);
+
+CREATE TABLE Bicicletas (
+    bicicleta_ID INTEGER PRIMARY KEY,
+    marca VARCHAR(255),
+    modelo VARCHAR(255),
+    ano INTERGER,
+    cliente_id INTERGER
+);
+
+CREATE TABLE Pecas (
+    peca_id INTERGER PRIMARY KEY,
+    tipo VARCHAR(255),
+    marca VARCHAR(255),
+    preco DECIMAL(10,2),
+    estoque INTERGER
+);
+
+CREATE TABLE Servicos (
+    servico_id INTERGER PRIMARY KEY,
+    data_servico DATE,
+    descicao_servico VARCHAR(255),
+    valor_servico DECIMAL(10,2),
+    bicicleta_id INTERGER,
+    peca_id INTERGER,
+    cliente_id INTERGER
+);
+
+CREATE TABLE Pagamento (
+    pagamento_id INTERGER PRIMARY KEY,
+    forma_pagamento INTERGER,
+    valor_pagamento DECIMAL(10,2),
+    data_pagamento DATE,
+    servico_id INTERGER
+);
+
+CREATE TABLE possui (
+    fk_Cliente_cliente_id INTEGER,
+    fk_Bicicletas_bicicleta_ID INTEGER
+);
+
+CREATE TABLE solicita (
+    fk_Cliente_cliente_id INTEGER,
+    fk_Servicos_servico_id INTERGER
+);
+
+CREATE TABLE Relacionamento_2 (
+    fk_Cliente_cliente_id INTEGER,
+    fk_Pagamento_pagamento_id INTERGER
+);
+
+CREATE TABLE Relacionamento_1 (
+    fk_Bicicletas_bicicleta_ID INTEGER,
+    fk_Servicos_servico_id INTERGER
+);
+
+CREATE TABLE Relacionamento_3 (
+    fk_Servicos_servico_id INTERGER,
+    fk_Pecas_peca_id INTERGER
+);
+
+CREATE TABLE Relacionamento_4 (
+    fk_Servicos_servico_id INTERGER,
+    fk_Pagamento_pagamento_id INTERGER
+);
+ 
+ALTER TABLE possui ADD CONSTRAINT FK_possui_1
+    FOREIGN KEY (fk_Cliente_cliente_id)
+    REFERENCES Cliente (cliente_id)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE possui ADD CONSTRAINT FK_possui_2
+    FOREIGN KEY (fk_Bicicletas_bicicleta_ID)
+    REFERENCES Bicicletas (bicicleta_ID)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE solicita ADD CONSTRAINT FK_solicita_1
+    FOREIGN KEY (fk_Cliente_cliente_id)
+    REFERENCES Cliente (cliente_id)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE solicita ADD CONSTRAINT FK_solicita_2
+    FOREIGN KEY (fk_Servicos_servico_id)
+    REFERENCES Servicos (servico_id)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Relacionamento_2 ADD CONSTRAINT FK_Relacionamento_2_1
+    FOREIGN KEY (fk_Cliente_cliente_id)
+    REFERENCES Cliente (cliente_id)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Relacionamento_2 ADD CONSTRAINT FK_Relacionamento_2_2
+    FOREIGN KEY (fk_Pagamento_pagamento_id)
+    REFERENCES Pagamento (pagamento_id)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Relacionamento_1 ADD CONSTRAINT FK_Relacionamento_1_1
+    FOREIGN KEY (fk_Bicicletas_bicicleta_ID)
+    REFERENCES Bicicletas (bicicleta_ID)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Relacionamento_1 ADD CONSTRAINT FK_Relacionamento_1_2
+    FOREIGN KEY (fk_Servicos_servico_id)
+    REFERENCES Servicos (servico_id)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Relacionamento_3 ADD CONSTRAINT FK_Relacionamento_3_1
+    FOREIGN KEY (fk_Servicos_servico_id)
+    REFERENCES Servicos (servico_id)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Relacionamento_3 ADD CONSTRAINT FK_Relacionamento_3_2
+    FOREIGN KEY (fk_Pecas_peca_id)
+    REFERENCES Pecas (peca_id)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Relacionamento_4 ADD CONSTRAINT FK_Relacionamento_4_1
+    FOREIGN KEY (fk_Servicos_servico_id)
+    REFERENCES Servicos (servico_id)
+    ON DELETE RESTRICT;
+ 
+ALTER TABLE Relacionamento_4 ADD CONSTRAINT FK_Relacionamento_4_2
+    FOREIGN KEY (fk_Pagamento_pagamento_id)
+    REFERENCES Pagamento (pagamento_id)
+    ON DELETE RESTRICT;

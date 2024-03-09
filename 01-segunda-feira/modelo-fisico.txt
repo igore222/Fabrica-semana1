@@ -1,0 +1,111 @@
+/* Lógico_1: */
+
+CREATE TABLE Aluno (
+    Nome VARCHAR PRIMARY KEY,
+    Idade INTEGER,
+    Endereco VARCHAR,
+    Nivel VARCHAR
+);
+
+CREATE TABLE Instrutor (
+    ID INTEGER PRIMARY KEY,
+    Nome VARCHAR,
+    EspecialidadeNado VARCHAR,
+    Experiancia VARCHAR
+);
+
+CREATE TABLE Aula (
+    Tipo_de_aula VARCHAR PRIMARY KEY,
+    Dias_e_Horarios TIMESTAMP,
+    Duracao INTEGER,
+    Local VARCHAR
+);
+
+CREATE TABLE Piscina (
+    Nome VARCHAR PRIMARY KEY,
+    Metragem DECIMAL,
+    Profundidade DECIMAL,
+    CapacidadeAlunos INTEGER
+);
+
+CREATE TABLE Matricula (
+    ID INTEGER PRIMARY KEY,
+    Data_de_Matricula DATE,
+    Valor DECIMAL,
+    Status VARCHAR
+);
+
+CREATE TABLE Avaliacao (
+    Peso DECIMAL,
+    Altura DECIMAL,
+    IMC DECIMAL
+);
+
+CREATE TABLE Relacionamento_1 (
+    fk_Matricula_ID INTEGER,
+    fk_Aluno_Nome VARCHAR
+);
+
+CREATE TABLE Relacionamento_4 (
+    fk_Aula_Tipo_de_aula VARCHAR,
+    fk_Piscina_Nome VARCHAR
+);
+
+CREATE TABLE Relacionamento_2 (
+    fk_Matricula_ID INTEGER,
+    fk_Aula_Tipo_de_aula VARCHAR
+);
+
+CREATE TABLE Relacionamento_3 (
+    fk_Aula_Tipo_de_aula VARCHAR,
+    fk_Instrutor_ID INTEGER
+);
+
+CREATE TABLE Relacionamento_5 (
+    fk_Aluno_Nome VARCHAR
+);
+ 
+ALTER TABLE Relacionamento_1 ADD CONSTRAINT FK_Relacionamento_1_1
+    FOREIGN KEY (fk_Matricula_ID)
+    REFERENCES Matricula (ID)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Relacionamento_1 ADD CONSTRAINT FK_Relacionamento_1_2
+    FOREIGN KEY (fk_Aluno_Nome)
+    REFERENCES Aluno (Nome)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Relacionamento_4 ADD CONSTRAINT FK_Relacionamento_4_1
+    FOREIGN KEY (fk_Aula_Tipo_de_aula)
+    REFERENCES Aula (Tipo_de_aula)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Relacionamento_4 ADD CONSTRAINT FK_Relacionamento_4_2
+    FOREIGN KEY (fk_Piscina_Nome)
+    REFERENCES Piscina (Nome)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Relacionamento_2 ADD CONSTRAINT FK_Relacionamento_2_1
+    FOREIGN KEY (fk_Matricula_ID)
+    REFERENCES Matricula (ID)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Relacionamento_2 ADD CONSTRAINT FK_Relacionamento_2_2
+    FOREIGN KEY (fk_Aula_Tipo_de_aula)
+    REFERENCES Aula (Tipo_de_aula)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Relacionamento_3 ADD CONSTRAINT FK_Relacionamento_3_1
+    FOREIGN KEY (fk_Aula_Tipo_de_aula)
+    REFERENCES Aula (Tipo_de_aula)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Relacionamento_3 ADD CONSTRAINT FK_Relacionamento_3_2
+    FOREIGN KEY (fk_Instrutor_ID)
+    REFERENCES Instrutor (ID)
+    ON DELETE SET NULL;
+ 
+ALTER TABLE Relacionamento_5 ADD CONSTRAINT FK_Relacionamento_5_1
+    FOREIGN KEY (fk_Aluno_Nome)
+    REFERENCES Aluno (Nome)
+    ON DELETE SET NULL;
